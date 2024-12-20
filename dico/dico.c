@@ -1,37 +1,49 @@
-#include "dico.h"
+/// DYNAMIC ARRAYS
+
+#include "dico.h" // contains all includes
+
+int MINLEN = 2 ;
+int LENMULT = 2 ;
+int RATIO = 3 ;
 
 struct element_s {
     int key ;
     int** value ;
 } ;
+typedef struct element_s element ;
 
-typedef struct element_s element ; 
+struct cell_s {
+    element elt ;
+    struct cell_s* next ;
+} ;
+typedef struct cell_s cell ;
 
-typedef element* cell ;
+typedef cell* list ;
 
-struct dico_s {
-    int len ;
-    int max_len ; 
-    cell* cases ;
+struct dyn_arrays_s {
+  cases* elt ;
+  int len ;
+  int memlen ;
 } ;
 
-typedef struct dico_s dico ;
+typedef struct dyn_arrays_s dA ;
 
-int MINLEN = 10 ;
-
-dico create () {
-    dico n_dico = {0, MINLEN, malloc(sizeof(cell)*MINLEN)} ;
-    for (int i = 0 ; i < MINLEN ; i++) {
-        n_dico.cases[i] = NULL ;
+// Fonctions auxiliaires
+int max_len(int a, int b) {
+    while (a > b) {
+        b *= LENMULT ;
     }
-    return n_dico ; 
+    return b ;
 }
 
-bool is_empty(dico d) {
-    return (d.len == 0) ; 
+int min_len(int a, int b) {
+    while(a<b) {
+        b /= LENMULT ;
+    }
+    return b;
 }
 
-int pow(int x, int n) {
+int pow_int(int x, int n) {
     //Returns 1 if n <= 0, else x^n
     int r = 1 ;
     for (int i = 1 ; i<n ; i++) {
@@ -40,22 +52,108 @@ int pow(int x, int n) {
     return r ;
 }
 
-int h (int i, int j) {
-    if (i >= 0) {
-        if (j>=0) return pow(2, 2*i) + pow(3, 2*j) ;
-        return pow(2, 2*i) + pow(3, -2*j - 1) ;
-    } else {
-        if (j>=0) return pow(2, -2*i - 1) + pow(3, 2*j) ;
-        return pow(2, -2*i - 1) + pow(3, -2*j - 1) ;
+void resize(dA* t, int newlen) {
+    if (newlen < MINLEN) {
+        printf("Error : Minimum lenght exeeded\n") ;
+        assert(false) ;
+    }
+    else {
+        if ((float)newlen / (float)t->memlen > 3) {
+            int length = max_len(newlen, t->memlen) ;
+            cases* n_t = malloc(sizeof(cases)*length) ;
+            for (int i = 0; i<t->memlen; i++) {
+                element* elts = to_tab(t->elt[i]) ;
+                for (int j = 0; j<(len(t->elt[i])); j++) {
+                    add_in_last(n_t[(elts[j].key)%length], elts[j]) ;
+                }
+            }
+            free(t->elt) ;
+            t->elt = n_t ;
+            t->memlen = length ;
+        }
     }
 }
 
-void add (dico d, int i, int j, int** map) {
-    int id = h(i, j)%(d.max_len);
-    int k = h(i, j);
-    if (d.cases[id] == NULL) {
-        d.cases[id] = malloc(sizeof(element)) ;
-        d.cases[id]->key = k ;
-        d.cases[id]->value = map ;
+/**
+ * Calculates the hashing value of a couple of integers
+ * 
+ * @param i First value of the couple
+ * @param j Second value of the couple
+ * 
+ * @returns The value of the unique corresponding integer to the couple
+ */
+int h (int i, int j) {
+    if (i >= 0) {
+        if (j>=0) return pow_int(2, 2*i) + pow_int(3, 2*j) ;
+        return pow_int(2, 2*i) + pow_int(3, -2*j - 1) ;
+    } else {
+        if (j>=0) return pow_int(2, -2*i - 1) + pow_int(3, 2*j) ;
+        return pow_int(2, -2*i - 1) + pow_int(3, -2*j - 1) ;
     }
+}
+
+//Fonctions interfaces
+
+//Constructeurs
+dA* create () {
+    dA* dyn_list = malloc(sizeof(dA)) ;
+    dyn_list->elt = malloc(sizeof(cases) * MINLEN) ;
+    for (int i = 0 ; i<MINLEN ; i++) {
+        dyn_list->elt[i] = empty_list() ;
+    }
+    dyn_list->len = 0 ;
+    dyn_list->memlen = MINLEN ;
+    return dyn_list ;
+}
+
+dA* create_from(int len, cases* a) {
+    dA* dyn_list = create() ;
+    resize(dyn_list, len) ;
+    for (int i = 0; i < len; i++) {
+        dyn_list->elt[i] = a[i] ;
+    }
+    dyn_list->len = len ;
+    return dyn_list ;
+}
+
+//Accesseurs
+/**
+ * @brief Accesses the element from the specified index
+ * 
+ * @param t Pointer to the dynamic array
+ * @param i The index of the element to get
+ */
+element get(dA* t, int i, int j) {
+    int id = h(i, j) ;
+    return find(t->elt[id%(t->memlen)], id) ;
+}
+
+//Transformateurs
+
+/**
+ * @brief Appends an element to the dynamic array.
+ *
+ * This function adds the specified element to the end of the dynamic array.
+ *
+ * @param t Pointer to the dynamic array.
+ * @param i First value of coordinates
+ * @param j Second value of coordinates
+ * @param map A matrix representing the map corresponding to the room at the coordinates
+ */
+void append(dA* t, int i, int j, int** map) {
+    if (t->len >= MINLEN) 
+        resize(t, t->len + 1) ;
+    int id = h(i, j) ;
+    element e = {id, map} ;
+    add_in_last(t->elt[id%(t->memlen)], e) ;
+    t->len += 1;
+}
+
+//Destructeurs
+void free_dA(dA* t) {
+    for (int i = 0; i<t->len; i++) {
+        destroy(t->elt[i]) ;
+    }
+    free(t->elt) ;
+    free(t) ;
 }
