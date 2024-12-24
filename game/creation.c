@@ -1,19 +1,25 @@
 #include "creation.h"
 
 int MROWS = 31 ;
-int MCOLUMNS = 125 ;
+int MCOLUMNS = 115 ;
 
 int ROWS = 9 ;
-int COLUMNS = 38 ;
+int COLUMNS = 15 ;
 
 enum obstacle_e {
     none,
     rock,
     bomb,
-    hole
+    portal
 } ;
 
 typedef enum obstacle_e obstacle ;
+
+char obst[4][3][7] = {{"       ", "       ", "       "}, 
+                    {" ##### ", "#######", " ##### "}, 
+                    {"   |   ", " /---\\ ", " \\___/ "}, 
+                    {" ____  ", "/    \\ ", "\\____/ "}
+} ;
 
 int** create_empty () {
     int** n_tab = malloc(sizeof(int*)*ROWS) ;
@@ -23,7 +29,7 @@ int** create_empty () {
     return n_tab ;
 } 
 
-int** create_from(obstacle** obst, int len) {
+int** create_from(obstacle obst[9][15]) {
     int** n_tab = create_empty () ;
     for (int i = 0; i<ROWS; i++) {
         for (int j = 0; j<COLUMNS; j++) {
@@ -33,7 +39,9 @@ int** create_from(obstacle** obst, int len) {
     return n_tab ;
 }
 
-char** create_map () {
+char** create_map (obstacle o[9][15]) {
+    int** m = create_from(o) ;
+
     char** map = malloc(sizeof(char*)*MROWS) ;
     for (int i = 0 ; i<MROWS; i++) {
         map[i] = malloc(sizeof(char)*MCOLUMNS) ;
@@ -90,6 +98,17 @@ char** create_map () {
             map[i][MCOLUMNS - 2] = '-' ;
         }
     }
+
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            for (int k = 0; k < 3; k++) {
+                for (int l = 0; l<7; l++) {
+                    map[(i*3) + 2 + k][(j*7) + 5 + l] = obst[m[i][j]][k][l] ;
+                }
+            }
+        }
+    }
+
     return map ;
 }
 
@@ -104,7 +123,22 @@ void print_map(char** map) {
 }
 
 int main () {
-    char** map = create_map() ;
+    obstacle o_map[9][15] = 
+    {
+        {none, rock, none, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, none, none, none, rock, none, none, none, none, none, none, none, bomb, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, bomb, none, none, none, none, none, none, none, none, none, none, none, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, portal, none, none},
+        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none}
+    } ;
+
+    char** map = create_map(o_map) ;
+
     print_map(map) ;
+
     return 0 ;
 }
