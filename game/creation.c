@@ -111,34 +111,3 @@ char** create_map (obstacle o[9][15]) {
 
     return map ;
 }
-
-void print_map(char** map) {
-    for (int i = 0; i<MROWS; i++) {
-        for (int j = 0; j<MCOLUMNS; j++) {
-            printf("%c", map[i][j]) ;
-        }
-        printf("\n") ;
-    } 
-    printf("\n") ;
-}
-
-int main () {
-    obstacle o_map[9][15] = 
-    {
-        {none, rock, none, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, none, none, none, rock, none, none, none, none, none, none, none, bomb, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, bomb, none, none, none, none, none, none, none, none, none, none, none, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, portal, none, none},
-        {none, none, none, none, none, none, none, none, none, none, none, none, none, none, none}
-    } ;
-
-    char** map = create_map(o_map) ;
-
-    print_map(map) ;
-
-    return 0 ;
-}

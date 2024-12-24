@@ -4,4 +4,4 @@
 
 typedef enum obstacles_e obstactles ;
 
-int** create_empty() ;
+char** create_map (obstacle o[9][15]) ;
