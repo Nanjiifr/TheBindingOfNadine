@@ -20,13 +20,13 @@ typedef struct cell_s cell ;
 
 typedef cell* list ;
 
-struct dyn_arrays_s {
+struct dyn_dico_s {
   cases* elt ;
   int len ;
   int memlen ;
 } ;
 
-typedef struct dyn_arrays_s dA ;
+typedef struct dyn_dico_s dA ;
 
 // Fonctions auxiliaires
 int max_len(int a, int b) {

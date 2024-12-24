@@ -9,7 +9,7 @@
 #include "tab_chaines.h"
 
 typedef list cases ;
-typedef struct dyn_arrays_s dA ;
+typedef struct dyn_dico_s dA ;
 
 
 /// Constructeurs
