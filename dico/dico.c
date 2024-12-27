@@ -2,13 +2,14 @@
 
 #include "dico.h" // contains all includes
 
-int MINLEN = 2 ;
+int MINLEN = 100 ;
 int LENMULT = 2 ;
 int RATIO = 3 ;
 
 struct element_s {
     int key ;
     int** value ;
+    int teleport ;
 } ;
 typedef struct element_s element ;
 
@@ -140,11 +141,11 @@ element get(dA* t, int i, int j) {
  * @param j Second value of coordinates
  * @param map A matrix representing the map corresponding to the room at the coordinates
  */
-void append(dA* t, int i, int j, int** map) {
+void append(dA* t, int i, int j, int** map, int teleport) {
     if (t->len >= MINLEN) 
         resize(t, t->len + 1) ;
     int id = h(i, j) ;
-    element e = {id, map} ;
+    element e = {id, map, teleport} ;
     add_in_last(t->elt[id%(t->memlen)], e) ;
     t->len += 1;
 }
