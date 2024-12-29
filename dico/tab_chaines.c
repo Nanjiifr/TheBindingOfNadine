@@ -3,6 +3,7 @@
 struct element_s {
     int key ;
     int** value ;
+    int teleport ;
 } ;
 typedef struct element_s element ;
 
@@ -18,8 +19,8 @@ typedef cell* list ;
 list empty_list () {
     list head = malloc(sizeof(cell)) ;
     cell* tail = malloc(sizeof(cell)) ;
-    element head_elt = { -1, NULL };
-    element tail_elt = { -1, NULL };
+    element head_elt = { -1, NULL, 0};
+    element tail_elt = { -1, NULL, 0};
     head->elt = head_elt;
     tail->elt = tail_elt;
     head->next = tail ;
@@ -40,16 +41,10 @@ int len(list l) {
 
 void add_in_last (list l, element e) {
     cell* last = l;
-    //printf("%d\n", last->elt.key) ;
-    //if (last->next != NULL)
-    //    printf("%d\n", last->next->elt.key) ;
     cell* n_cell = malloc(sizeof(cell)) ;
     n_cell->elt = e ;
     n_cell->next = last->next ;
     last->next = n_cell ;
-    //printf("La clé %d a bien été ajoutée\n", l->next->elt.key) ;
-    //printf("%d\n", l->elt.key);
-    //printf("%d   %d\n", l->next->elt.key, n_cell->elt.key) ;
 }
 
 void removev1 (list l, element e) {
