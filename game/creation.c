@@ -1,7 +1,5 @@
 #include "creation.h"
 
-#define clear() printf("\033[H\033[J")
-
 int MROWS = 31 ;
 int MCOLUMNS = 115 ;
 
@@ -150,21 +148,4 @@ char** create_random() {
     }
 
     return create_map(m) ;
-}
-
-void print_map(char** map) {
-    clear() ;
-    for (int i = 0; i<MROWS; i++) {
-        for (int j = 0; j<MCOLUMNS; j++) {
-            printf("%c", map[i][j]) ;
-        }
-        printf("\n") ;
-    } 
-    printf("\n") ;
-}
-
-int main () {
-    char** map = create_random() ;
-
-    print_map(map) ;
 }
