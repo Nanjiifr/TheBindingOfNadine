@@ -18,7 +18,8 @@ dA* create_from(int len, cases* a) ;
 /// Accesseurs
 element get(dA* t, int i, int j) ;
 /// Transformateurs
-void append(dA* t, int i, int j, int** map) ;
+void append(dA* t, int i, int j, int** map, int teleport) ;
+void remove_dico(dA* t, int i, int j) ;
 /// Libération Mémoire
 void free_dA(dA* t) ;
 
