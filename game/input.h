@@ -1,3 +1,6 @@
+#ifndef INPUT_H
+#define INPUT_H
+
 #include <unistd.h>
 #include <poll.h>
 #include <stdio.h>
@@ -9,4 +12,10 @@
 #include <string.h>
 #include <sys/time.h>
 
+typedef struct Personnage_s Personnage ;
+
 int getch() ;
+
+void move (Personnage* pers, int dir) ;
+
+#endif //INPUT_H

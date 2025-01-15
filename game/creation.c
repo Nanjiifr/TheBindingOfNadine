@@ -1,10 +1,12 @@
 #include "creation.h"
 
-int MROWS = 31 ;
-int MCOLUMNS = 115 ;
+//#define clear() printf("\033[H\033[J")
+
+int MROWS = 38 ;
+int MCOLUMNS = 131 ;
 
 int ROWS = 9 ;
-int COLUMNS = 15 ;
+int COLUMNS = 13 ;
 
 int NB_OBST = 3 ;
 
@@ -17,11 +19,11 @@ enum obstacle_e {
 
 typedef enum obstacle_e obstacle ;
 
-char obst[4][3][7] = {{"       ", "       ", "       "}, 
-                    {" ##### ", "#######", " ##### "}, 
-                    {"   |   ", " /---\\ ", " \\___/ "}, 
-                    {" ____  ", "/    \\ ", "\\____/ "}
-} ;
+typedef struct Personnage_s Personnage ;
+
+char obst[4][3][9] = {{"         ", "         ", "         "}} ;
+
+char perso[3][9] = {"  /. .\\  ", "-+\\_@_/+-", "   / \\   "} ;
 
 int** create_empty () {
     int** n_tab = malloc(sizeof(int*)*ROWS) ;
@@ -34,7 +36,7 @@ int** create_empty () {
     return n_tab ;
 } 
 
-int** create_from(obstacle obst[9][15]) {
+int** create_from(obstacle obst[9][13]) {
     int** n_tab = create_empty () ;
     for (int i = 0; i<ROWS; i++) {
         for (int j = 0; j<COLUMNS; j++) {
@@ -44,7 +46,7 @@ int** create_from(obstacle obst[9][15]) {
     return n_tab ;
 }
 
-char** create_map (int** m) {
+char** create_map (int** m, Personnage pers) {
     //int** m = create_from(o) ;
     char** map = malloc(sizeof(char*)*MROWS) ;
     for (int i = 0 ; i<MROWS; i++) {
@@ -54,62 +56,58 @@ char** create_map (int** m) {
         }
     }
 
-    for (int j = 0; j<MCOLUMNS; j++) {
-        if (j==0 | j==MCOLUMNS - 1) {
-            map[0][j] = '+' ;
-            map[1][j] = '|' ;
-            map[MROWS - 2][j] = '|' ;
-            map[MROWS - 1][j] = '+' ;
-        } else if (j == (MCOLUMNS/2) - 2 | j==MCOLUMNS/2 + 2) {
-            map[0][j] = '-' ;
-            map[1][j] = '|' ;
-            map[MROWS - 2][j] = '|' ;
-            map[MROWS - 1][j] = '-' ;
-        } else if ((1 <= j & j <= 3) | (MCOLUMNS-4 <= j & j <= MCOLUMNS-2)) {
-            map[0][j] = '-' ;
-            map[1][j] = ' ' ;
-            map[MROWS - 2][j] = ' ' ;
-            map[MROWS - 1][j] = '-' ;
-        } else if (j == 4) {
-            map[0][j] = '-' ;
-            map[1][j] = '\\' ;
-            map[MROWS - 2][j] = '/' ;
-            map[MROWS - 1][j] = '-' ;
-        } else if (j == MCOLUMNS - 5) {
-            map[0][j] = '-' ;
-            map[1][j] = '/' ;
-            map[MROWS - 2][j] = '\\' ;
-            map[MROWS - 1][j] = '-' ;
-        } else {
-            map[0][j] = '-' ;
-            map[1][j] = '-' ;
-            map[MROWS - 2][j] = '-' ;
-            map[MROWS - 1][j] = '-' ;
+    map[0][0] = '+' ;
+    map[0][MCOLUMNS-1] = '+' ;
+    map[MROWS-1][0] = '+' ;
+    map[MROWS-1][MCOLUMNS-1] = '+' ;
+    map[5][6] = '+' ;
+    map[5][MCOLUMNS-7] = '+' ;
+    map[MROWS-6][6] = '+' ;
+    map[MROWS-6][MCOLUMNS-7] = '+' ;
+
+    for (int i = 1; i < MCOLUMNS - 1; i++) {
+        map[0][i] = '-' ;
+        map[MROWS-1][i] = '-' ;
+        
+        if (i >= 7 & i <= MCOLUMNS - 8) {
+            map[5][i] = '-' ;
+            map[MROWS-6][i] = '-' ;
         }
     }
 
-    for (int i = 2; i<MROWS-2; i++) {
+    for (int i = 1; i < MROWS - 1; i++) {
         map[i][0] = '|' ;
-        map[i][4] = '|' ;
-        map[i][MCOLUMNS - 5] = '|' ;
-        map[i][MCOLUMNS - 1] = '|' ;
-        if (i == (MROWS/2) - 1 | i == (MROWS/2)) {
-            map[i][1] = '-' ;
-            map[i][2] = '-' ;
-            map[i][3] = '-' ;
-            map[i][MCOLUMNS - 4] = '-' ;
-            map[i][MCOLUMNS - 3] = '-' ;
-            map[i][MCOLUMNS - 2] = '-' ;
+        map[i][MCOLUMNS-1] = '|' ;
+        
+        if (i >= 6 & i <= MROWS - 7) {
+            map[i][6] = '|' ;
+            map[i][MCOLUMNS-7] = '|' ;
         }
     }
 
-    for (int i = 0; i < ROWS; i++) {
+    for (int i = 0 ; i < 9; i++) {
+        map[1][61 + i] = '_' ;
+        if (i >= 1 & i <= 7) {
+            map[MROWS-3][61 + i] = '_' ;
+        }
+    }
+
+    
+
+
+    /*for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLUMNS; j++) {
             for (int k = 0; k < 3; k++) {
-                for (int l = 0; l<7; l++) {
-                    map[(i*3) + 2 + k][(j*7) + 5 + l] = obst[m[i][j]][k][l] ;
+                for (int l = 0; l < 9; l++) {
+                    map[(i*3) + 6 + k][(j*7) + 7 + l] = obst[m[i][j]][k][l] ;
                 }
             }
+        }
+    }*/
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 9; j++) {
+            map[(pers.y*3) + 6 + i][(pers.x*9)+ 7 + j] = perso[i][j] ;
         }
     }
 
@@ -127,7 +125,7 @@ int cond(int* pos, int nb_obst) {
     return true ;
 }
 
-char** create_random() {
+char** create_random(Personnage pers) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -138,7 +136,7 @@ char** create_random() {
 
     while(cond(pos, nb_obst)) {
         for (int i = 0 ; i<nb_obst; i++) {
-            pos[i] = rand() % 135 ;
+            pos[i] = rand() % 117 ;
         }
     }
 
@@ -147,5 +145,16 @@ char** create_random() {
         m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % NB_OBST ;
     }
 
-    return create_map(m) ;
+    return create_map(m, pers) ;
 }
+
+/*void print_map(char** map) {
+    clear() ;
+    for (int i = 0; i<MROWS; i++) {
+        for (int j = 0; j<MCOLUMNS; j++) {
+            printf("%c", map[i][j]) ;
+        }
+        printf("\n") ;
+    } 
+    printf("\n") ;
+}*/

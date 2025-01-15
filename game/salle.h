@@ -1,5 +1,5 @@
-#ifndef SALLE
-#define SALLE
+#ifndef SALLE_H
+#define SALLE_H
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -16,7 +16,4 @@ void destroyRoom(salle* room);
 void addTp(salle* room, teleporteur* tp);
 void removeTp(salle* room);
 
-
-
-#endif //SALLE
-
+#endif //SALLE_H

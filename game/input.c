@@ -1,9 +1,15 @@
 #include "input.h"
 
+struct Personnage_s {
+    int x ;
+    int y ;
+} ;
+
+typedef struct Personnage_s Personnage ;
+
 double acquisition_time = 75.0 ;
 
-int getch() 
-{ 
+int getch() { 
     int ch;
     struct termios oldattr, newattr;
 
@@ -21,4 +27,19 @@ int getch()
     tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
 
     return ch; 
+}
+
+void move (Personnage* pers, int dir) {
+    if (dir == 2 & pers->x <= 13) { //Est
+        pers->x += 1 ;
+    }
+    if (dir == 3 & pers->y >= 1) { //Ouest
+        pers->x -= 1 ;
+    }
+    if (dir == 0 & pers->x >= 1) { //Nord
+        pers->y -= 1 ;
+    }
+    if (dir == 1 & pers->x <= 8) { //Sud
+        pers->y += 1 ;
+    }
 }

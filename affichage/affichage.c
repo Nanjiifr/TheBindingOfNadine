@@ -2,8 +2,8 @@
 
 #define clear() printf("\033[H\033[J")
 
-int M_ROWS = 31 ;
-int M_COLUMNS = 115 ;
+int M_ROWS = 38 ;
+int M_COLUMNS = 131 ;
 
 void print_map(char** map) {
     clear() ;
