@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-typedef struct element_s element;
-typedef struct cell_s cell;
+typedef struct element_s element ;
 
 typedef cell* list;
 

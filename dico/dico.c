@@ -8,8 +8,7 @@ int RATIO = 3 ;
 
 struct element_s {
     int key ;
-    int** value ;
-    int teleport ;
+    void* value ;
 } ;
 typedef struct element_s element ;
 
@@ -139,13 +138,13 @@ element get(dA* t, int i, int j) {
  * @param t Pointer to the dynamic array.
  * @param i First value of coordinates
  * @param j Second value of coordinates
- * @param map A matrix representing the map corresponding to the room at the coordinates
+ * @param value The struct containing data for the rooms
  */
-void append(dA* t, int i, int j, int** map, int teleport) {
+void append(dA* t, int i, int j, void* value) {
     if (t->len >= MINLEN) 
         resize(t, t->len + 1) ;
     int id = h(i, j) ;
-    element e = {id, map, teleport} ;
+    element e = {id, value} ;
     add_in_last(t->elt[id%(t->memlen)], e) ;
     t->len += 1;
 }

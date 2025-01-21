@@ -1,5 +1,5 @@
-#ifndef _DYN_ARRAYS_H
-#define _DYN_ARRAYS_H
+#ifndef DYN_ARRAYS_H
+#define DYN_ARRAYS_H
 
 #include <stdbool.h>
 #include <assert.h>
@@ -18,7 +18,7 @@ dA* create_from(int len, cases* a) ;
 /// Accesseurs
 element get(dA* t, int i, int j) ;
 /// Transformateurs
-void append(dA* t, int i, int j, int** map, int teleport) ;
+void append(dA* t, int i, int j, void* value) ;
 void remove_dico(dA* t, int i, int j) ;
 /// Libération Mémoire
 void free_dA(dA* t) ;

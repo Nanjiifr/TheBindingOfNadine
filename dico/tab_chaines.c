@@ -1,9 +1,8 @@
 #include "tab_chaines.h"
 
 struct element_s {
-    int key ;
-    int** value ;
-    int teleport ;
+    int key ; //utilisé que pour les sentinelles et l'identification des salles (hashage des coordonnées)
+    void* value ; //On pourra tout mettre dans un struct à part les coordonnées, comme ca tout est stocké au même endroit.
 } ;
 typedef struct element_s element ;
 
@@ -19,10 +18,8 @@ typedef cell* list ;
 list empty_list () {
     list head = malloc(sizeof(cell)) ;
     cell* tail = malloc(sizeof(cell)) ;
-    element head_elt = { -1, NULL, 0};
-    element tail_elt = { -1, NULL, 0};
-    head->elt = head_elt;
-    tail->elt = tail_elt;
+    head->elt.key = -1  ;
+    tail->elt.key = -1 ;
     head->next = tail ;
     tail->next = NULL ;
     return head ;
