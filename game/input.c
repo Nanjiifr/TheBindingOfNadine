@@ -30,16 +30,16 @@ int getch() {
 }
 
 void move (Personnage* pers, int dir) {
-    if (dir == 2 & pers->x <= 13) { //Est
+    if (dir == 2 && pers->x < 12) { //Est
         pers->x += 1 ;
     }
-    if (dir == 3 & pers->y >= 1) { //Ouest
+    if (dir == 3 && pers->x > 0) { //Ouest
         pers->x -= 1 ;
     }
-    if (dir == 0 & pers->x >= 1) { //Nord
+    if (dir == 0 && pers->y > 0) { //Nord
         pers->y -= 1 ;
     }
-    if (dir == 1 & pers->x <= 8) { //Sud
+    if (dir == 1 && pers->y < 8) { //Sud
         pers->y += 1 ;
     }
 }
