@@ -23,6 +23,36 @@ int main () {
         }
         char** map = create_map(m, pers) ;
         print_map(map) ;
+
+        if(pers.x == 6 && pers.y == 0){
+            printf("                   Porte Nord - Press [E] to enter\n");
+            if (n==101){
+                printf("Vous avez appuyé sur e\n");
+                pers.y = 7;
+            }
+        }
+
+        if(pers.x == 6 && pers.y == 8){
+            printf("                   Porte Sud - Press [E] to enter\n");
+            if (n==101){
+                pers.y = 1;
+            }
+        }
+
+        if(pers.x == 0 && pers.y == 4){
+            printf("                   Porte Ouest - Press [E] to enter\n");
+            if (n==101){
+                pers.x = 11;
+            }
+        }
+
+        if(pers.x == 12 && pers.y == 4){
+            printf("                   Porte Est - Press [E] to enter\n");
+            if (n==101){
+                pers.x = 1;
+            }
+        }
+        
     }
     return 0 ;
 }
