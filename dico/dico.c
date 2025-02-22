@@ -82,7 +82,7 @@ void resize(dA* t, int newlen) {
  * 
  * @returns The value of the unique corresponding integer to the couple
  */
-int h (int i, int j) {
+/*int h (int i, int j) {
     if (i >= 0) {
         if (j>=0) return pow_int(2, 2*i) + pow_int(3, 2*j) ;
         return pow_int(2, 2*i) + pow_int(3, -2*j - 1) ;
@@ -90,6 +90,9 @@ int h (int i, int j) {
         if (j>=0) return pow_int(2, -2*i - 1) + pow_int(3, 2*j) ;
         return pow_int(2, -2*i - 1) + pow_int(3, -2*j - 1) ;
     }
+}*/
+int h(int i, int j) {
+    return i * 31 + j * 37;
 }
 
 //Fonctions interfaces

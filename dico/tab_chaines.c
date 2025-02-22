@@ -71,9 +71,9 @@ element find(list l, int id) {
         last = last->next ;
         l = l->next ;
     }
-    if (last->elt.key == -1) {
+    /*if (last->elt.key == -1) {
         printf("Element not found ...") ;
-    }
+    }*/
     return last->elt ;
 }
 
