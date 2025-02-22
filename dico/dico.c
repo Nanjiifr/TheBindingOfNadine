@@ -92,7 +92,8 @@ void resize(dA* t, int newlen) {
     }
 }*/
 int h(int i, int j) {
-    return i * 31 + j * 37;
+    int hash = (1000000007 + (i * 31 + j * 37)%1000000007) % 1000000007;
+    return hash ;
 }
 
 //Fonctions interfaces
