@@ -7,6 +7,10 @@ struct element_s {
 } ;
 typedef struct element_s element;
 
+struct teleporter_s {
+    salle* salle1; 
+    salle* salle2;
+};
 
 struct salle_s {
     int coord_x;
@@ -14,12 +18,7 @@ struct salle_s {
     element* elt;
     teleporteur* tp;
 };
-typedef struct salle_s salle;
 
-struct teleporter_s {
-    salle* salle1; 
-    salle* salle2;
-};
 typedef struct salle_s salle;
 typedef struct teleporter_s teleporteur;
 

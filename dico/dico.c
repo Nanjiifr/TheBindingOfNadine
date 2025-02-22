@@ -106,7 +106,7 @@ dA* create () {
     return dyn_list ;
 }
 
-dA* create_from(int len, cases* a) {
+dA* create_from_d(int len, cases* a) {
     dA* dyn_list = create() ;
     resize(dyn_list, len) ;
     for (int i = 0; i < len; i++) {

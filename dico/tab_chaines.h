@@ -7,7 +7,7 @@
 #include <assert.h>
 
 typedef struct element_s element ;
-
+typedef struct cell_s cell ;
 typedef cell* list;
 
 list empty_list() ;

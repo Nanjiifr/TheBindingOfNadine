@@ -10,7 +10,7 @@
 #include "creation.h"
 
 typedef struct salle_s salle;
-typedef struct teleporteur_s teleporteur;
+typedef struct teleporter_s teleporteur;
 typedef struct element_s element ;
 
 salle* createRoom(int coord_x,int coord_y);
