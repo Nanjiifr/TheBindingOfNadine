@@ -1,43 +1,47 @@
 #include "salle.h"
 
-struct element_s {
-    int key ;
-    int** value ;
-    int teleport ; // convention : 0 si pas de teleporteur, 1 si teleporteur sortant, 2 si teleporteur entrant
-} ;
-typedef struct element_s element;
+
 
 struct teleporter_s {
     salle* salle1; 
     salle* salle2;
 };
+typedef struct teleporter_s teleporteur;
+
 
 struct salle_s {
     int coord_x;
     int coord_y;
-    element* elt;
+    int** map;
+    int nb_tp;
     teleporteur* tp;
 };
-
 typedef struct salle_s salle;
-typedef struct teleporter_s teleporteur;
+
+struct element_s {
+    int key ;
+    salle* value ;
+} ;
+typedef struct element_s element;
+
+
 
 
 salle* createRoom(int coord_x,int coord_y){
     salle* salle = malloc(sizeof(salle));
-    element* e = malloc(sizeof(element));
-    e -> key = h(coord_x,coord_y);
-    e -> value = create_empty();
-    e -> teleport = 0;
-    salle -> elt = e;
+    salle -> coord_x = coord_x;
+    salle -> coord_y = coord_y;
+    salle -> map = create_empty();
+    salle -> nb_tp = 0;
     salle -> tp = NULL;
     return salle;
 }
 
 void destroyRoom(salle* room){
-    free(room->elt->value);
-    free(room->elt);
-    free(room -> tp);
+    free(room->map);
+    if (room -> tp != NULL){
+        free(room -> tp);
+    }
     free(room);
 }
 
@@ -49,8 +53,8 @@ teleporteur* createTp(salle* room1, salle* room2){
 }
 
 void addTp(salle* room1, salle* room2){
-    room1 ->elt -> teleport = 1;
-    room2 ->elt -> teleport = 2;
+    room1 -> nb_tp = 1;
+    room2 -> nb_tp = 2;
     teleporteur* tp1 = createTp(room1,room2);
     room1 -> tp = tp1;
     room2 -> tp = tp1;
@@ -58,8 +62,8 @@ void addTp(salle* room1, salle* room2){
 
 
 void removeTp(salle* room1, salle* room2){
-    room1 ->elt -> teleport = 0;
-    room2 ->elt -> teleport = 0;
+    room1 -> nb_tp = 0;
+    room2 -> nb_tp = 0;
     free(room1 -> tp);
     free(room2 -> tp);
     room1 -> tp = NULL;

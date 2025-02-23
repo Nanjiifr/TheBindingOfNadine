@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include "../affichage/affichage.h"
+#include "salle.h"
+#include "../dico/dico.h"
 #include "input.h"
 #include "creation.h"
 #include <stdbool.h>
