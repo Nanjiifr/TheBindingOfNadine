@@ -45,14 +45,15 @@ void add_in_last (list l, element e) {
 }
 
 void removev1 (list l, element e) {
-    cell* last = l->next;
-    while (last->elt.key != -1 && last->elt.key != e.key) {
-        last = last->next ;
-        l = l->next ;
+    cell* prev = l;
+    cell* current = l->next;
+    while (current->elt.key != -1 && current->elt.key != e.key) {
+        prev = current;
+        current = current->next;
     }
-    if (l->elt.key != -1) {
-        l->next = last->next ;
-        free(last) ;
+    if (current->elt.key != -1) {
+        prev->next = current->next;
+        free(current);
     }
 }
 
@@ -95,3 +96,11 @@ element* to_tab(list l) {
     }
     return n_tab ;
 }
+
+/*void print_list(list l) {
+    cell* current = l->next;
+    while (current->elt.key != -1) {
+        printf("Key: %d, Value: %p\n", current->elt.key, current->elt.value);
+        current = current->next;
+    }
+}*/

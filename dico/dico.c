@@ -164,6 +164,8 @@ void free_dA(dA* t) {
 
 void remove_dico(dA* t, int i, int j) {
     element e = get(t, i, j) ;
-    int id = h(i, j) ;
-    removev1(t->elt[id%(t->memlen)], e) ;
+    if (*(int*)e.value != -1) {
+        int id = h(i, j) ;
+        removev1(t->elt[id%(t->memlen)], e) ;
+    }
 }
