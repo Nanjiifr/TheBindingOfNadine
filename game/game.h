@@ -1,10 +1,13 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include "../affichage/affichage.h"
 #include "input.h"
 #include "creation.h"
 #include <stdbool.h>
-#include "game.h"
 
-int main () {
-    party() ;
-    return 0 ;
-}
+
+void party();
+
+
+#endif // GAME_H
