@@ -70,12 +70,13 @@ void party () {
         }
         char** map = create_map(m, pers) ;
         print_map(map) ;
+        printf("x : %d, y : %d\n", *coordx, *coordy);
 
         if(pers.x == 6 && pers.y == 0){
             printf("                   Porte Nord - Press [E] to enter\n");
             if (n==101){
+                *coordy = *coordy + 1;
                 pers.y = 7;
-                *coordy ++;
                 m = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
@@ -83,8 +84,8 @@ void party () {
         if(pers.x == 6 && pers.y == 8){
             printf("                   Porte Sud - Press [E] to enter\n");
             if (n==101){
+                *coordy = *coordy - 1;
                 pers.y = 1;
-                *coordy --;
                 m = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
@@ -93,7 +94,7 @@ void party () {
             printf("                   Porte Ouest - Press [E] to enter\n");
             if (n==101){
                 pers.x = 11;
-                *coordx --;
+                *coordx = *coordx - 1;
                 m = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
@@ -102,7 +103,7 @@ void party () {
             printf("                   Porte Est - Press [E] to enter\n");
             if (n==101){
                 pers.x = 1;
-                *coordx ++;
+                *coordx = *coordx + 1;
                 m = changeRoom(calepinMap, *coordx, *coordy);
             }
         }

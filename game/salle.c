@@ -1,7 +1,5 @@
 #include "salle.h"
 
-
-
 struct teleporter_s {
     salle* salle1; 
     salle* salle2;
@@ -24,14 +22,11 @@ struct element_s {
 } ;
 typedef struct element_s element;
 
-
-
-
 salle* createRoom(int coord_x,int coord_y){
     salle* salle = malloc(sizeof(salle));
     salle -> coord_x = coord_x;
     salle -> coord_y = coord_y;
-    salle -> map = create_empty();
+    salle -> map = create_random_data();
     salle -> nb_tp = 0;
     salle -> tp = NULL;
     return salle;

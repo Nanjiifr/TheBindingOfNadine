@@ -25,6 +25,8 @@ char obst[4][3][9] = {{"         ", "         ", "         "}} ;
 
 char perso[3][9] = {"  /. .\\  ", "-+\\_@_/+-", "   / \\   "} ;
 
+char rocko[3][9] = {" /##\\/#\\ ", "|##//#\\#|", " \\##/\\#/ "} ;
+
 int** create_empty () {
     int** n_tab = malloc(sizeof(int*)*ROWS) ;
     for (int i = 0; i<ROWS; i++) {
@@ -105,6 +107,18 @@ char** create_map (int** m, Personnage pers) {
         }
     }*/
 
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            if (m[i][j] == 1) {
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 9; l++) {
+                        map[(i*3) + 6 + k][(j*9) + 7 + l] = rocko[k][l] ;
+                    }
+                }
+            }
+        }
+    }
+
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 9; j++) {
             map[(pers.y*3) + 6 + i][(pers.x*9)+ 7 + j] = perso[i][j] ;
@@ -123,6 +137,30 @@ int cond(int* pos, int nb_obst) {
         i++ ;
     }
     return true ;
+}
+
+
+int** create_random_data() {
+    srand(time(NULL)) ;
+    int nb_obst = 2 + rand() % 4 ;
+
+    int pos[nb_obst] ;
+    for (int i = 0; i<nb_obst; i++) {
+        pos[i] = -1 ;
+    }
+
+    while(cond(pos, nb_obst)) {
+        for (int i = 0 ; i<nb_obst; i++) {
+            pos[i] = rand() % 117 ;
+        }
+    }
+
+    int** m = create_empty() ;
+    for (int i = 0; i<nb_obst; i++) {
+        m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % NB_OBST ;
+    }
+
+    return m ;
 }
 
 char** create_random(Personnage pers) {

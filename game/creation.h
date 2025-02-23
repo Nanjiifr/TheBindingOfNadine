@@ -19,6 +19,7 @@ typedef struct Personnage_s Personnage ;
 int** create_empty () ;
 char** create_map (int** m, Personnage pers) ;
 //int** create_from(obstacle obst[9][13]) ;
+int** create_random_data() ;
 char** create_random (Personnage pers) ;
 
 #endif //CREATION
