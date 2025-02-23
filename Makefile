@@ -12,7 +12,7 @@ affichage.o :
 	gcc -c affichage/*.c
 
 clean:
-	rm -f *.o
+	rm -f *.o & rm -f jeu
 
 
 
