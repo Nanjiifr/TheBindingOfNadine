@@ -29,17 +29,33 @@ int getch() {
     return ch; 
 }
 
-void move (Personnage* pers, int dir) {
-    if (dir == 2 && pers->x < 12) { //Est
+void move (Personnage* pers, int dir, int** m) {
+    if (dir == 2 && pers->x < 11 && m[pers->y][pers-> x + 1] == 1) { //Est
+        pers->x += 1 ;
+        m[pers->y][pers-> x] = 0 ;
+        m[pers->y][pers-> x + 1] = 1 ;
+    } else if (dir == 2 && pers->x < 12 && m[pers->y][pers-> x + 1] != 1) {
         pers->x += 1 ;
     }
-    if (dir == 3 && pers->x > 0) { //Ouest
+    if (dir == 3 && pers->x > 1 && m[pers->y][pers-> x - 1] == 1) { //Ouest
+        pers->x -= 1 ;
+        m[pers->y][pers-> x] = 0 ;
+        m[pers->y][pers-> x - 1] = 1 ;
+    } else if (dir == 3 && pers->x > 0 && m[pers->y][pers-> x - 1] != 1) {
         pers->x -= 1 ;
     }
-    if (dir == 0 && pers->y > 0) { //Nord
+    if (dir == 0 && pers->y > 1 && m[pers->y - 1][pers-> x] == 1) { //Nord
+        pers->y -= 1 ;
+        m[pers->y][pers-> x] = 0 ;
+        m[pers->y - 1][pers-> x] = 1 ;
+    } else if (dir == 0 && pers->y > 0 && m[pers->y - 1][pers-> x] != 1) {
         pers->y -= 1 ;
     }
-    if (dir == 1 && pers->y < 8) { //Sud
+    if (dir == 1 && pers->y < 7 && m[pers->y + 1][pers-> x] == 1) { //Sud
         pers->y += 1 ;
-    }
+        m[pers->y][pers-> x] = 0 ;
+        m[pers->y + 1][pers-> x] = 1 ;
+    } else if (dir == 1 && pers->y < 8 && m[pers->y + 1][pers-> x] != 1) {
+        pers->y += 1 ;
+    } 
 }

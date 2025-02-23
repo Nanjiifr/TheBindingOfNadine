@@ -57,16 +57,16 @@ void party () {
     while (true) {
         int n = getch() ;
         if (n == 122) {
-            move(&pers, 0) ; //Nord
+            move(&pers, 0, m) ; //Nord
         }
         if (n == 113) {
-            move(&pers, 3) ; //Ouest
+            move(&pers, 3, m) ; //Ouest
         }
         if (n == 115) {
-            move(&pers, 1) ; //Sud
+            move(&pers, 1, m) ; //Sud
         }
         if (n == 100) {
-            move(&pers, 2) ; //Est
+            move(&pers, 2, m) ; //Est
         }
         char** map = create_map(m, pers) ;
         print_map(map) ;

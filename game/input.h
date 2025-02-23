@@ -16,6 +16,6 @@ typedef struct Personnage_s Personnage ;
 
 int getch() ;
 
-void move (Personnage* pers, int dir) ;
+void move (Personnage* pers, int dir, int** m) ;
 
 #endif //INPUT_H
