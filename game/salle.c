@@ -11,7 +11,7 @@ struct salle_s {
     int coord_x;
     int coord_y;
     int** map;
-    int nb_tp;
+    bool* havetp;
     teleporteur* tp;
 };
 typedef struct salle_s salle;
@@ -26,8 +26,8 @@ salle* createRoom(int coord_x,int coord_y){
     salle* salle = malloc(sizeof(salle));
     salle -> coord_x = coord_x;
     salle -> coord_y = coord_y;
-    salle -> map = create_random_data();
-    salle -> nb_tp = 0;
+    salle -> havetp = malloc(sizeof(bool)) ;
+    salle -> map = create_random_data(salle -> havetp);
     salle -> tp = NULL;
     return salle;
 }
@@ -48,8 +48,8 @@ teleporteur* createTp(salle* room1, salle* room2){
 }
 
 void addTp(salle* room1, salle* room2){
-    room1 -> nb_tp = 1;
-    room2 -> nb_tp = 2;
+    //room1 -> nb_tp = 1;
+    //room2 -> nb_tp = 2;
     teleporteur* tp1 = createTp(room1,room2);
     room1 -> tp = tp1;
     room2 -> tp = tp1;
@@ -57,8 +57,8 @@ void addTp(salle* room1, salle* room2){
 
 
 void removeTp(salle* room1, salle* room2){
-    room1 -> nb_tp = 0;
-    room2 -> nb_tp = 0;
+    //room1 -> nb_tp = 0;
+    //room2 -> nb_tp = 0;
     free(room1 -> tp);
     free(room2 -> tp);
     room1 -> tp = NULL;

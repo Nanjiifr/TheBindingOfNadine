@@ -140,7 +140,7 @@ int cond(int* pos, int nb_obst) {
 }
 
 
-int** create_random_data() {
+int** create_random_data(bool* tp) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -156,8 +156,18 @@ int** create_random_data() {
     }
 
     int** m = create_empty() ;
+    *tp = false ;
     for (int i = 0; i<nb_obst; i++) {
-        m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % NB_OBST ;
+        int r = 1 + rand() % NB_OBST ;
+        if (*tp == false) {
+            m[pos[i]/COLUMNS][pos[i]%COLUMNS] = r ;
+            if (r == NB_OBST)
+                *tp = true ;
+        }
+        else if (r == NB_OBST) {
+            r = rand() % NB_OBST ;
+            m[pos[i]/COLUMNS][pos[i]%COLUMNS] = r ;
+        }
     }
 
     return m ;
