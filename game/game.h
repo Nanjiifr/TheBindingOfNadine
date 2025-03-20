@@ -6,6 +6,7 @@
 #include "../dico/dico.h"
 #include "input.h"
 #include "creation.h"
+#include "mob.h"
 #include <stdbool.h>
 
 

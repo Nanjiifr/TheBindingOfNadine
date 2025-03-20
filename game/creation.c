@@ -27,6 +27,8 @@ char perso[3][9] = {"  /. .\\  ", "-+\\_@_/+-", "   / \\   "} ;
 
 char rocko[3][9] = {" /##\\/#\\ ", "|##//#\\#|", " \\##/\\#/ "} ;
 
+char halfon[3][9] = {"(o_____o)" , "-\\__^__/-", "//     \\\\"} ;
+
 int** create_empty () {
     int** n_tab = malloc(sizeof(int*)*ROWS) ;
     for (int i = 0; i<ROWS; i++) {
@@ -48,7 +50,7 @@ int** create_from(obstacle obst[9][13]) {
     return n_tab ;
 }
 
-char** create_map (int** m, Personnage pers) {
+char** create_map (int** m, Personnage pers, mob* mobs) {
     //int** m = create_from(o) ;
     char** map = malloc(sizeof(char*)*MROWS) ;
     for (int i = 0 ; i<MROWS; i++) {
@@ -125,6 +127,12 @@ char** create_map (int** m, Personnage pers) {
         }
     }
 
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 9; j++) {
+            map[(*mobs[0].y * 3) + 6 + i][(*mobs[0].x * 9) + 7 + j] = halfon[i][j];
+        }
+    }
+
     return map ;
 }
 
@@ -140,7 +148,7 @@ int cond(int* pos, int nb_obst) {
 }
 
 
-int** create_random_data() {
+int** create_random_data(bool* tp) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -156,21 +164,24 @@ int** create_random_data() {
     }
 
     int** m = create_empty() ;
-    if (portal){
-        m[pos[0]/COLUMNS][pos[0]%COLUMNS] = 3 ;
-    }
-    else {
-        m[pos[0]/COLUMNS][pos[0]%COLUMNS] = 1 + rand() % (NB_OBST-1) ;
-    }
-    for (int i = 1; i<nb_obst; i++) {
-        m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % (NB_OBST-1) ;
+    *tp = false ;
+    for (int i = 0; i<nb_obst; i++) {
+        int r = 1 + rand() % NB_OBST ;
+        if (*tp == false) {
+            m[pos[i]/COLUMNS][pos[i]%COLUMNS] = r ;
+            if (r == NB_OBST)
+                *tp = true ;
+        }
+        else if (r == NB_OBST) {
+            r = rand() % NB_OBST ;
+            m[pos[i]/COLUMNS][pos[i]%COLUMNS] = r ;
+        }
     }
 
     return m ;
 }
 
-char** create_random(Personnage pers) {
-    bool portal = false;
+char** create_random(Personnage pers, mob* mobs) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -190,7 +201,7 @@ char** create_random(Personnage pers) {
         m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % NB_OBST ;
     }
 
-    return create_map(m, pers) ;
+    return create_map(m, pers, mobs) ;
 }
 
 /*void print_map(char** map) {

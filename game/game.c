@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 struct vt {
     int x ;
     int y ;
@@ -45,15 +44,24 @@ int** changeRoom(dA* calepin, int x , int y){
 void party () {
     dA* calepinMap = create();
     Personnage pers = {7, 7} ;
+    mob h ;
+    h.m_type = HALFON ;
+    h.x = malloc(sizeof(int)) ;
+    h.y = malloc(sizeof(int)) ;
     salle* salle1 = createRoom(0,0);
     int** m = malloc(sizeof(int*)*9) ;
     int* coordx = malloc(sizeof(int));
     int* coordy = malloc(sizeof(int));
     m = salle1-> map; // TODO : ajouter TP ICI
+    srand(time(NULL));
+    do {
+        *h.x = rand() % 9;
+        *h.y = rand() % 9;
+    } while (m[*h.x][*h.y] != 0);
     *coordx = 0;
     *coordy = 0;
     append(calepinMap, 0, 0, salle1);
-    char** map = create_map(m, pers) ;
+    char** map = create_map(m, pers, &h) ;
     while (true) {
         int n = getch() ;
         if (n == 127) {
@@ -62,17 +70,21 @@ void party () {
         }
         if (n == 122) {
             move(&pers, 0, m) ; //Nord
+            move_mob(m, h) ;
         }
         if (n == 113) {
             move(&pers, 3, m) ; //Ouest
+            move_mob(m, h) ;
         }
         if (n == 115) {
             move(&pers, 1, m) ; //Sud
+            move_mob(m, h) ;
         }
         if (n == 100) {
             move(&pers, 2, m) ; //Est
+            move_mob(m, h) ;
         }
-        char** map = create_map(m, pers) ;
+        char** map = create_map(m, pers, &h) ;
         print_map(map) ;
         printf("Coordonnées x : %d, y : %d | ", *coordx, *coordy);
         printf("Press [Backspace] to quit to title\n");
@@ -83,6 +95,11 @@ void party () {
                 *coordy = *coordy + 1;
                 pers.y = 7;
                 m = changeRoom(calepinMap, *coordx, *coordy);
+                srand(time(NULL));
+                do {
+                    *h.x = rand() % 9;
+                    *h.y = rand() % 9;
+                } while (m[*h.x][*h.y] != 0);
             }
         }
 
@@ -92,6 +109,11 @@ void party () {
                 *coordy = *coordy - 1;
                 pers.y = 1;
                 m = changeRoom(calepinMap, *coordx, *coordy);
+                srand(time(NULL));
+                do {
+                    *h.x = rand() % 9;
+                    *h.y = rand() % 9;
+                } while (m[*h.x][*h.y] != 0);
             }
         }
 
@@ -101,6 +123,11 @@ void party () {
                 pers.x = 11;
                 *coordx = *coordx - 1;
                 m = changeRoom(calepinMap, *coordx, *coordy);
+                srand(time(NULL));
+                do {
+                    *h.x = rand() % 9;
+                    *h.y = rand() % 9;
+                } while (m[*h.x][*h.y] != 0);
             }
         }
 
@@ -110,6 +137,11 @@ void party () {
                 pers.x = 1;
                 *coordx = *coordx + 1;
                 m = changeRoom(calepinMap, *coordx, *coordy);
+                srand(time(NULL));
+                do {
+                    *h.x = rand() % 9;
+                    *h.y = rand() % 9;
+                } while (m[*h.x][*h.y] != 0);
             }
         }
         
