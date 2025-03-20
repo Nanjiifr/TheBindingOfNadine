@@ -140,7 +140,7 @@ int cond(int* pos, int nb_obst) {
 }
 
 
-int** create_random_data(bool portal) {
+int** create_random_data() {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -169,7 +169,8 @@ int** create_random_data(bool portal) {
     return m ;
 }
 
-char** create_random(Personnage pers,bool portal) {
+char** create_random(Personnage pers) {
+    bool portal = false;
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
