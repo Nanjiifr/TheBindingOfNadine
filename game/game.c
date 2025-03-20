@@ -69,20 +69,20 @@ void party () {
             return ;
         }
         if (n == 122) {
+            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 0, m) ; //Nord
-            move_mob(m, h) ;
         }
         if (n == 113) {
+            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 3, m) ; //Ouest
-            move_mob(m, h) ;
         }
         if (n == 115) {
+            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 1, m) ; //Sud
-            move_mob(m, h) ;
         }
         if (n == 100) {
+            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 2, m) ; //Est
-            move_mob(m, h) ;
         }
         char** map = create_map(m, pers, &h) ;
         print_map(map) ;

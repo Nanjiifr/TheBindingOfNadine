@@ -20,6 +20,6 @@ struct mob_s {
 
 typedef struct mob_s mob ;
 
-void move_mob(int** map, mob m) ;
+void move_mob(int** map, mob m, int pers_x, int pers_y) ;
 
 #endif //MOB_H
