@@ -56,6 +56,10 @@ void party () {
     char** map = create_map(m, pers) ;
     while (true) {
         int n = getch() ;
+        if (n == 127) {
+            printMainMenu();
+            return ;
+        }
         if (n == 122) {
             move(&pers, 0, m) ; //Nord
         }
@@ -70,10 +74,11 @@ void party () {
         }
         char** map = create_map(m, pers) ;
         print_map(map) ;
-        printf("x : %d, y : %d\n", *coordx, *coordy);
-
+        printf("Coordonnées x : %d, y : %d | ", *coordx, *coordy);
+        printf("Press [Backspace] to quit to title\n");
+        
         if(pers.x == 6 && pers.y == 0){
-            printf("                   Porte Nord - Press [E] to enter\n");
+            printf("                                                Porte Nord - Press [E] to enter\n");
             if (n==101){
                 *coordy = *coordy + 1;
                 pers.y = 7;
@@ -82,7 +87,7 @@ void party () {
         }
 
         if(pers.x == 6 && pers.y == 8){
-            printf("                   Porte Sud - Press [E] to enter\n");
+            printf("                                                 Porte Sud - Press [E] to enter\n");
             if (n==101){
                 *coordy = *coordy - 1;
                 pers.y = 1;
@@ -91,7 +96,7 @@ void party () {
         }
 
         if(pers.x == 0 && pers.y == 4){
-            printf("                   Porte Ouest - Press [E] to enter\n");
+            printf("                                                 Porte Ouest - Press [E] to enter\n");
             if (n==101){
                 pers.x = 11;
                 *coordx = *coordx - 1;
@@ -100,7 +105,7 @@ void party () {
         }
 
         if(pers.x == 12 && pers.y == 4){
-            printf("                   Porte Est - Press [E] to enter\n");
+            printf("                                                  Porte Est - Press [E] to enter\n");
             if (n==101){
                 pers.x = 1;
                 *coordx = *coordx + 1;
@@ -108,5 +113,6 @@ void party () {
             }
         }
         
+
     }
 }

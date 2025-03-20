@@ -140,7 +140,7 @@ int cond(int* pos, int nb_obst) {
 }
 
 
-int** create_random_data() {
+int** create_random_data(bool portal) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
@@ -156,14 +156,20 @@ int** create_random_data() {
     }
 
     int** m = create_empty() ;
-    for (int i = 0; i<nb_obst; i++) {
-        m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % NB_OBST ;
+    if (portal){
+        m[pos[0]/COLUMNS][pos[0]%COLUMNS] = 3 ;
+    }
+    else {
+        m[pos[0]/COLUMNS][pos[0]%COLUMNS] = 1 + rand() % (NB_OBST-1) ;
+    }
+    for (int i = 1; i<nb_obst; i++) {
+        m[pos[i]/COLUMNS][pos[i]%COLUMNS] = 1 + rand() % (NB_OBST-1) ;
     }
 
     return m ;
 }
 
-char** create_random(Personnage pers) {
+char** create_random(Personnage pers,bool portal) {
     srand(time(NULL)) ;
     int nb_obst = 2 + rand() % 4 ;
 
