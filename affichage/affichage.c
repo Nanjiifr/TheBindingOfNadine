@@ -89,6 +89,37 @@ void printMainMenu(){
     printf("                                                                       ");
     printf("Press[ESC] to quit\n");
     printf("                                                                  ");
+    printf("Press [R] to check the rules\n") ;
+    printf("                                                                  ");
     printf("----------------------------\n");
     fflush(stdout);
+}
+
+void printRules() {
+    clear() ;
+    printf("%s",BLUE);
+
+    printf("\n\n") ;
+
+    printf("Game logic : \n") ;
+    printf("You are Nadine, a little baby trying to explore the dangerous dungeon of the monstruous King Halfon \n") ;
+    printf("Keys used : \n") ;
+    printf("You can move in the map using the keys [ZQSD]. To enter a door (and change rooms), just press [E] when standing in front of the door \n") ;
+    printf("You can press [B] when standing next to a bomb, to destroy all the rooms around you (except the one you are currently in) \n") ;
+    printf("To teleport (to a random room), you can press [T] when standing next to a teleporter \n") ;
+    printf("Rules : \n") ;
+    printf("All the rooms are preserved, including mobs and obstacles. This mean, when you change from one room to another") ;
+    printf("then get back to the one you were in before, you will enter in the exact same room \n") ;
+    printf("You have 5 lives are the begining of a game. You can play until you have no more left. However, if you happen to loose somes, ") ;
+    printf("you can still win them back by defeating mobs, or opening chests. \n") ;
+    printf("To open a chest, you need to have a key, that you can get by defeating mobs. You can have a maximum of 3 keys at the same time\n") ;
+
+    printf("\n\n") ;
+    printf("                                                                    Happy playing !!") ;
+
+
+    printf("\n\n") ;
+    printf("----------------------------\n") ;
+    printf("Press [Backspace] to return to menu") ;
+    fflush(stdout) ;
 }

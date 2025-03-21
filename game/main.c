@@ -23,13 +23,25 @@ int main () {
             continue;
         }
 
+        if(!inGame && n == 114) {
+            printRules();
+            while(true) {
+            int m = getch();
+            if(m == 127) {
+                printMainMenu();
+                break;
+            }
+            }
+            continue;
+        }
+
         if(!(inGame) && n==27){
             clear();
             printf("Thank you for playing! \n");
             printf("%s\n",RESET);
             break;
         }
-    }
-    
-    return 0 ;
+        }
+        
+        return 0;
 }

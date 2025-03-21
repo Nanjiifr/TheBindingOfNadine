@@ -72,25 +72,25 @@ void party(bool* inGame) {
             return ;
         }
         if (n == 122) {
-            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 0, m) ; //Nord
+            move_mob(m, h, pers.x, pers.y) ;
         }
         if (n == 113) {
-            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 3, m) ; //Ouest
+            move_mob(m, h, pers.x, pers.y) ;
         }
         if (n == 115) {
-            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 1, m) ; //Sud
+            move_mob(m, h, pers.x, pers.y) ;
         }
         if (n == 100) {
-            move_mob(m, h, pers.x, pers.y) ;
             move(&pers, 2, m) ; //Est
+            move_mob(m, h, pers.x, pers.y) ;
         }
         char** map = create_map(m, pers, &h) ;
         print_map(map) ;
         print_lives(lives) ;
-        printf("Press [Backspace] to quit to title\n");
+        printf("Press [Backspace] to quit to title (All game data will be erased)\n");
         
         if(pers.x == 6 && pers.y == 0){
             printf("                                                Porte Nord - Press [E] to enter\n");

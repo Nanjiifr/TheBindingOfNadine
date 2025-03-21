@@ -7,5 +7,6 @@
 void print_map(char** map) ;
 void print_lives(int l) ;
 void printMainMenu();
+void printRules() ;
 
 #endif //AFFICHAGE_H
