@@ -41,9 +41,11 @@ int** changeRoom(dA* calepin, int x , int y){
     }
 }
 
-void party () {
+void party(bool* inGame) {
+    *inGame = true;
     dA* calepinMap = create();
     Personnage pers = {7, 7} ;
+    int lives = 5 ;
     mob h ;
     h.m_type = HALFON ;
     h.x = malloc(sizeof(int)) ;
@@ -65,6 +67,7 @@ void party () {
     while (true) {
         int n = getch() ;
         if (n == 127) {
+            *inGame = false;
             printMainMenu();
             return ;
         }
@@ -86,7 +89,7 @@ void party () {
         }
         char** map = create_map(m, pers, &h) ;
         print_map(map) ;
-        printf("Coordonnées x : %d, y : %d | ", *coordx, *coordy);
+        print_lives(lives) ;
         printf("Press [Backspace] to quit to title\n");
         
         if(pers.x == 6 && pers.y == 0){
@@ -144,7 +147,5 @@ void party () {
                 } while (m[*h.x][*h.y] != 0);
             }
         }
-        
-
     }
 }

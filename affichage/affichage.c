@@ -29,6 +29,15 @@ void print_map(char** map) {
     printf("\n") ;
 }
 
+void print_lives(int l) {
+    printf("                                                    Lives : ") ;
+
+    for (int i = 0; i <l; i++) {
+        printf("❤️") ;
+    }
+    printf("\n") ;
+}
+
 void printMainMenu(){
     clear();
     printf("%s",BLUE);

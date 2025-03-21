@@ -51,7 +51,6 @@ int** create_from(obstacle obst[9][13]) {
 }
 
 char** create_map (int** m, Personnage pers, mob* mobs) {
-    //int** m = create_from(o) ;
     char** map = malloc(sizeof(char*)*MROWS) ;
     for (int i = 0 ; i<MROWS; i++) {
         map[i] = malloc(sizeof(char)*MCOLUMNS) ;
@@ -89,6 +88,7 @@ char** create_map (int** m, Personnage pers, mob* mobs) {
         }
     }
 
+    // Adding detailed doors
     for (int i = 0 ; i < 9; i++) {
         map[1][61 + i] = '_' ;
         if (i >= 1 & i <= 7) {
@@ -96,18 +96,71 @@ char** create_map (int** m, Personnage pers, mob* mobs) {
         }
     }
 
-    
+    // Top door
+    map[0][61] = '|' ;
+    map[0][69] = '|' ;
+    map[1][60] = '/' ;
+    map[1][70] = '\\' ;
+    map[2][60] = '|' ;
+    map[2][70] = '|' ;
+    map[3][60] = '|' ;
+    map[3][70] = '|' ;
+    map[4][60] = '|' ;
+    map[4][70] = '|' ;
 
+    // Bottom door
+    map[MROWS-1][61] = '|' ;
+    map[MROWS-1][69] = '|' ;
+    map[MROWS-2][60] = '\\' ;
+    map[MROWS-2][70] = '/' ;
+    map[MROWS-3][60] = '|' ;
+    map[MROWS-3][70] = '|' ;
+    map[MROWS-4][60] = '|' ;
+    map[MROWS-4][70] = '|' ;
+    map[MROWS-5][60] = '|' ;
+    map[MROWS-5][70] = '|' ;
 
-    /*for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            for (int k = 0; k < 3; k++) {
-                for (int l = 0; l < 9; l++) {
-                    map[(i*3) + 6 + k][(j*7) + 7 + l] = obst[m[i][j]][k][l] ;
-                }
-            }
-        }
-    }*/
+    // Left door
+    for (int i = 0; i < 5; i++) {
+        map[17 + i][0] = '|' ;
+        map[17 + i][1] = ' ' ;
+        map[17 + i][2] = ' ' ;
+        map[17 + i][3] = ' ' ;
+        map[17 + i][4] = ' ' ;
+        map[17 + i][5] = ' ' ;
+        map[17 + i][6] = '|' ;
+    }
+    map[16][3] = '_' ;
+    map[22][3] = '_' ;
+    map[15][2] = '/' ;
+    map[15][4] = '\\' ;
+    map[23][2] = '\\' ;
+    map[23][4] = '/' ;
+    map[16][2] = '|' ;
+    map[16][4] = '|' ;
+    map[22][2] = '|' ;
+    map[22][4] = '|' ;
+
+    // Right door
+    for (int i = 0; i < 5; i++) {
+        map[17 + i][MCOLUMNS-1] = '|' ;
+        map[17 + i][MCOLUMNS-2] = ' ' ;
+        map[17 + i][MCOLUMNS-3] = ' ' ;
+        map[17 + i][MCOLUMNS-4] = ' ' ;
+        map[17 + i][MCOLUMNS-5] = ' ' ;
+        map[17 + i][MCOLUMNS-6] = ' ' ;
+        map[17 + i][MCOLUMNS-7] = '|' ;
+    }
+    map[16][MCOLUMNS-4] = '_' ;
+    map[22][MCOLUMNS-4] = '_' ;
+    map[15][MCOLUMNS-5] = '/' ;
+    map[15][MCOLUMNS-3] = '\\' ;
+    map[23][MCOLUMNS-5] = '\\' ;
+    map[23][MCOLUMNS-3] = '/' ;
+    map[16][MCOLUMNS-5] = '|' ;
+    map[16][MCOLUMNS-3] = '|' ;
+    map[22][MCOLUMNS-5] = '|' ;
+    map[22][MCOLUMNS-3] = '|' ;
 
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLUMNS; j++) {

@@ -14,7 +14,7 @@ int main () {
         int n = getch();
 
         if(!inGame && n == 101){
-            party();
+            party(&inGame);
         }
 
         if(inGame && n==127){

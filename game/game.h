@@ -10,7 +10,7 @@
 #include <stdbool.h>
 
 
-void party();
+void party(bool* inGame);
 
 
 #endif // GAME_H
