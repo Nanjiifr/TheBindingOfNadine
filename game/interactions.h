@@ -3,11 +3,17 @@
 
 #include "creation.h"
 #include "salle.h"
+#include <unistd.h>
 
+struct element_s {
+    int key ;
+    salle* value;
+} ;
 
 typedef struct Objet_s Objet ;
 typedef struct Personnage_s Personnage ;
 typedef enum obstacle_e obstacle ;
+typedef struct element_s element ;
 
 // Fonction pour initialiser une bombe.
 void init_bombe(Objet* objet) ;
@@ -22,11 +28,9 @@ void init_rocher(Objet* objet) ;
 void interaction_objet(obstacle* obst, salle* salle_act) ;
 
 // Fonction pour supprimer les salles adjacentes (utilisée par la bombe).
-void boom(salle* salles, int* nombre_salles) ;
+void boom(dA* calepin, int coordx, int coordy) ;
 
 // Fonction pour téléporter le personnage dans une salle aléatoire.
 void teleporter_personnage(Personnage* personnage, salle* salles, int nombre_salles) ;
-
-// commentaire test
 
 #endif // INTERACTIONS_H

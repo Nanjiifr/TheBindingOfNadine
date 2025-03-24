@@ -5,11 +5,6 @@ struct vt {
     int y ;
 } ;
 
-struct element_s {
-    int key ;
-    salle* value;
-} ;
-
 struct teleporter_s {
     salle* salle1; 
     salle* salle2;
@@ -19,9 +14,10 @@ struct salle_s {
     int coord_x;
     int coord_y;
     int** map;
+    bool* havetp;
     teleporteur* tp;
-    int nb_tb;
-};
+    mob* mobs;
+} ;
 
 typedef struct salle_s salle;
 typedef struct teleporter_s teleporteur;
@@ -29,15 +25,15 @@ typedef struct element_s element ;
 
 
 
-int** changeRoom(dA* calepin, int x , int y){
+salle* changeRoom(dA* calepin, int x , int y){
     element e = get(calepin, x, y);
     if (e.key != -1){
-        return (e.value) -> map;
+        return e.value;
     }
     else{
         salle* salle = createRoom(x,y);
         append(calepin, x, y, salle);
-        return salle->map;
+        return salle;
     }
 }
 
@@ -46,25 +42,17 @@ void party(bool* inGame) {
     dA* calepinMap = create();
     Personnage pers = {7, 7} ;
     int lives = 5 ;
-    mob h ;
-    h.m_type = HALFON ;
-    h.x = malloc(sizeof(int)) ;
-    h.y = malloc(sizeof(int)) ;
     salle* salle1 = createRoom(0,0);
     int** m = malloc(sizeof(int*)*9) ;
     int* coordx = malloc(sizeof(int));
     int* coordy = malloc(sizeof(int));
-    m = salle1-> map; // TODO : ajouter TP ICI
-    srand(time(NULL));
-    do {
-        *h.x = rand() % 9;
-        *h.y = rand() % 9;
-    } while (m[*h.x][*h.y] != 0);
+    m = salle1->map; // TODO : ajouter TP ICI
     *coordx = 0;
     *coordy = 0;
     append(calepinMap, 0, 0, salle1);
-    char** map = create_map(m, pers, &h) ;
+    char** map = create_map(m, pers, salle1->mobs) ;
     while (true) {
+        m = salle1->map;
         int n = getch() ;
         if (n == 127) {
             *inGame = false;
@@ -73,21 +61,21 @@ void party(bool* inGame) {
         }
         if (n == 122) {
             move(&pers, 0, m) ; //Nord
-            move_mob(m, h, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y) ;
         }
         if (n == 113) {
             move(&pers, 3, m) ; //Ouest
-            move_mob(m, h, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y) ;
         }
         if (n == 115) {
             move(&pers, 1, m) ; //Sud
-            move_mob(m, h, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y) ;
         }
         if (n == 100) {
             move(&pers, 2, m) ; //Est
-            move_mob(m, h, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y) ;
         }
-        char** map = create_map(m, pers, &h) ;
+        char** map = create_map(m, pers, salle1->mobs) ;
         print_map(map) ;
         print_lives(lives) ;
         printf("Press [Backspace] to quit to title (All game data will be erased)\n");
@@ -97,12 +85,7 @@ void party(bool* inGame) {
             if (n==101){
                 *coordy = *coordy + 1;
                 pers.y = 7;
-                m = changeRoom(calepinMap, *coordx, *coordy);
-                srand(time(NULL));
-                do {
-                    *h.x = rand() % 9;
-                    *h.y = rand() % 9;
-                } while (m[*h.x][*h.y] != 0);
+                salle1 = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
 
@@ -111,12 +94,7 @@ void party(bool* inGame) {
             if (n==101){
                 *coordy = *coordy - 1;
                 pers.y = 1;
-                m = changeRoom(calepinMap, *coordx, *coordy);
-                srand(time(NULL));
-                do {
-                    *h.x = rand() % 9;
-                    *h.y = rand() % 9;
-                } while (m[*h.x][*h.y] != 0);
+                salle1 = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
 
@@ -125,12 +103,7 @@ void party(bool* inGame) {
             if (n==101){
                 pers.x = 11;
                 *coordx = *coordx - 1;
-                m = changeRoom(calepinMap, *coordx, *coordy);
-                srand(time(NULL));
-                do {
-                    *h.x = rand() % 9;
-                    *h.y = rand() % 9;
-                } while (m[*h.x][*h.y] != 0);
+                salle1 = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
 
@@ -139,12 +112,14 @@ void party(bool* inGame) {
             if (n==101){
                 pers.x = 1;
                 *coordx = *coordx + 1;
-                m = changeRoom(calepinMap, *coordx, *coordy);
-                srand(time(NULL));
-                do {
-                    *h.x = rand() % 9;
-                    *h.y = rand() % 9;
-                } while (m[*h.x][*h.y] != 0);
+                salle1 = changeRoom(calepinMap, *coordx, *coordy);
+            }
+        }
+
+        if (m[pers.y][pers.x] == bomb) {
+            printf("                                                  Bomb - Press [B] to activate\n");
+            if (n==98) {
+                boom(calepinMap, *coordx, *coordy) ;
             }
         }
     }

@@ -7,19 +7,20 @@
 #include <stdio.h>
 
 enum mob_type_e {
+    NONE,
     HALFON,
 } ;
 
 typedef enum mob_type_e mob_type ;
 
 struct mob_s {
-    mob_type m_type ;
-    int* x ;
-    int* y ;
+    int m_type;
+    int* x;
+    int* y;
 } ;
 
 typedef struct mob_s mob ;
 
-void move_mob(int** map, mob m, int pers_x, int pers_y) ;
+void move_mob(int** map, mob* m, int pers_x, int pers_y) ;
 
 #endif //MOB_H

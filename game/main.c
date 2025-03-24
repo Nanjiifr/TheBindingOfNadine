@@ -26,11 +26,11 @@ int main () {
         if(!inGame && n == 114) {
             printRules();
             while(true) {
-            int m = getch();
-            if(m == 127) {
-                printMainMenu();
-                break;
-            }
+                int m = getch();
+                if(m == 127) {
+                    printMainMenu();
+                    break;
+                }
             }
             continue;
         }
@@ -41,7 +41,6 @@ int main () {
             printf("%s\n",RESET);
             break;
         }
-        }
-        
-        return 0;
+    }
+    return 0;
 }

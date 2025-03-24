@@ -1,20 +1,21 @@
+CC = gcc
+CFLAGS = -g -gdwarf-4
+SRC_GAME = $(wildcard game/*.c)
+SRC_DICO = $(wildcard dico/*.c)
+SRC_AFFICHAGE = $(wildcard affichage/*.c)
+OBJ = $(SRC_GAME:.c=.o) $(SRC_DICO:.c=.o) $(SRC_AFFICHAGE:.c=.o)
 
-jeu : main.o
-	gcc -o jeu *.o
+jeu: $(OBJ)
+	$(CC) $(CFLAGS) -o jeu $(OBJ)
 
-main.o : dico.o
-	gcc -c game/*.c
+game/%.o: game/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-dico.o : affichage.o
-	gcc -c dico/*.c
+dico/%.o: dico/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-affichage.o :
-	gcc -c affichage/*.c
+affichage/%.o: affichage/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o & rm -f jeu
-
-
-
-
-
+	rm -f $(OBJ) jeu

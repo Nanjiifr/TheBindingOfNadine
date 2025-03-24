@@ -10,13 +10,6 @@ int COLUMNS = 13 ;
 
 int NB_OBST = 3 ;
 
-enum obstacle_e {
-    none,
-    rock,
-    bomb,
-    portal
-} ;
-
 typedef enum obstacle_e obstacle ;
 
 typedef struct Personnage_s Personnage ;
@@ -28,6 +21,8 @@ char perso[3][9] = {"  /. .\\  ", "-+\\_@_/+-", "   / \\   "} ;
 char rocko[3][9] = {" /##\\/#\\ ", "|##//#\\#|", " \\##/\\#/ "} ;
 
 char halfon[3][9] = {"(o_____o)" , "-\\__^__/-", "//     \\\\"} ;
+
+char booomb[3][9] = {" ___|___ ", "/  TNT  \\", "\\_______/"} ;
 
 int** create_empty () {
     int** n_tab = malloc(sizeof(int*)*ROWS) ;
@@ -164,12 +159,19 @@ char** create_map (int** m, Personnage pers, mob* mobs) {
 
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLUMNS; j++) {
-            if (m[i][j] == 1) {
+            if (m[i][j] == rock) {
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 9; l++) {
                         map[(i*3) + 6 + k][(j*9) + 7 + l] = rocko[k][l] ;
                     }
                 }
+            }
+            if (m[i][j] == bomb) {
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 9; l++) {
+                        map[(i*3) + 6 + k][(j*9) + 7 + l] = booomb[k][l] ;
+                    }
+                } 
             }
         }
     }
@@ -180,10 +182,14 @@ char** create_map (int** m, Personnage pers, mob* mobs) {
         }
     }
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 9; j++) {
-            map[(*mobs[0].y * 3) + 6 + i][(*mobs[0].x * 9) + 7 + j] = halfon[i][j];
-        }
+    for (int k = 0; k < 3; k++) {
+        if (mobs[k].m_type == HALFON) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 9; j++) {
+                    map[(*mobs[k].y * 3) + 6 + i][(*mobs[k].x * 9) + 7 + j] = halfon[i][j];
+                }
+            }
+        }    
     }
 
     return map ;

@@ -7,6 +7,7 @@
 #include "input.h"
 #include "creation.h"
 #include "mob.h"
+#include "interactions.h"
 #include <stdbool.h>
 
 

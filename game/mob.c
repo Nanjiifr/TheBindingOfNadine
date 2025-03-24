@@ -23,29 +23,31 @@ int* possible_moves(int** map, mob m, int pers_x, int pers_y) {
     return p ;
 }
 
-void move_mob(int** map, mob m, int pers_x, int pers_y) {
-    if (m.m_type == HALFON) {
-        int* p = possible_moves(map, m, pers_x, pers_y) ;
-        srand(time(NULL));
-        int direction;
-        do {
-            direction = rand() % 4;
-        } while (!p[direction]);
+void move_mob(int** map, mob* m, int pers_x, int pers_y) {
+    srand(time(NULL));
+    for (int i = 0; i < 3; i++) {
+        if (m[i].m_type == HALFON) {
+            int* p = possible_moves(map, m[i], pers_x, pers_y) ;
+            int direction;
+            do {
+                direction = rand() % 4;
+            } while (!p[direction]);
 
-        switch (direction) {
-            case 0:
-            (*m.x)--;
-            break;
-            case 1:
-            (*m.y)++;
-            break;
-            case 2:
-            (*m.x)++;
-            break;
-            case 3:
-            (*m.y)--;
-            break;
+            switch (direction) {
+                case 0:
+                (*m[i].x)--;
+                break;
+                case 1:
+                (*m[i].y)++;
+                break;
+                case 2:
+                (*m[i].x)++;
+                break;
+                case 3:
+                (*m[i].y)--;
+                break;
+            }
+            free(p);
         }
-        free(p);
     }
 }

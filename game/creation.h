@@ -8,6 +8,13 @@
 #include <time.h>
 #include "mob.h"
 
+enum obstacle_e {
+    none,
+    rock,
+    bomb,
+    portal
+} ;
+
 typedef enum obstacle_e obstacle ;
 
 struct Personnage_s {
