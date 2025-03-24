@@ -8,5 +8,6 @@ void print_map(char** map) ;
 void print_lives(int l) ;
 void printMainMenu();
 void printRules() ;
+void printGameOver() ;
 
 #endif //AFFICHAGE_H

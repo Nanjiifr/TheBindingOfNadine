@@ -22,6 +22,8 @@ char rocko[3][9] = {" /##\\/#\\ ", "|##//#\\#|", " \\##/\\#/ "} ;
 
 char halfon[3][9] = {"(o_____o)" , "-\\__^__/-", "//     \\\\"} ;
 
+char target_nadine[3][9] = {".__O_O__.", "(__|_|__)", "/|\\   /|\\"} ;
+
 char booomb[3][9] = {" ___|___ ", "/  TNT  \\", "\\_______/"} ;
 
 int** create_empty () {
@@ -189,7 +191,14 @@ char** create_map (int** m, Personnage pers, mob* mobs) {
                     map[(*mobs[k].y * 3) + 6 + i][(*mobs[k].x * 9) + 7 + j] = halfon[i][j];
                 }
             }
-        }    
+        }
+        if (mobs[k].m_type == TARGET_NADINE) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 9; j++) {
+                    map[(*mobs[k].y * 3) + 6 + i][(*mobs[k].x * 9) + 7 + j] = target_nadine[i][j];
+                }
+            }
+        }
     }
 
     return map ;

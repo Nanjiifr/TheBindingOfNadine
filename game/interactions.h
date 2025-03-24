@@ -11,7 +11,6 @@ struct element_s {
 } ;
 
 typedef struct Objet_s Objet ;
-typedef struct Personnage_s Personnage ;
 typedef enum obstacle_e obstacle ;
 typedef struct element_s element ;
 

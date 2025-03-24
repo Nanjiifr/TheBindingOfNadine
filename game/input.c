@@ -1,12 +1,5 @@
 #include "input.h"
 
-struct Personnage_s {
-    int x ;
-    int y ;
-} ;
-
-typedef struct Personnage_s Personnage ;
-
 double acquisition_time = 75.0 ;
 
 int getch() { 
@@ -35,7 +28,7 @@ bool count_rocks(Personnage* pers, int dir, int** m, int* n) {
         while (pers->x + c < 13 && m[pers->y][pers->x + c] == 1) {
             c ++ ;
         }
-        if (pers->x + c == 13) {
+        if (pers->x + c == 13 || (m[pers->y][pers->x + c] != none && c != 1)) {
             return false ;
         } else if (m[pers->y][pers->x + c - 1] == 1) {
             *n = c ;
@@ -50,7 +43,7 @@ bool count_rocks(Personnage* pers, int dir, int** m, int* n) {
         while (pers->x - c >= 0 && m[pers->y][pers->x - c] == 1) {
             c ++ ;
         }
-        if (pers->x - c == -1) {
+        if (pers->x - c == -1|| (m[pers->y][pers->x - c] != none && c != 1)) {
             return false ;
         } else if (m[pers->y][pers->x - c + 1] == 1) {
             *n = c ;
@@ -65,7 +58,7 @@ bool count_rocks(Personnage* pers, int dir, int** m, int* n) {
         while (pers->y - c >= 0 && m[pers->y - c][pers->x] == 1) {
             c ++ ;
         }
-        if (pers->y - c == -1) {
+        if (pers->y - c == -1 || (m[pers->y - c][pers->x] != none && c != 1)) {
             return false ;
         } else if (m[pers->y - c + 1][pers->x] == 1) {
             *n = c ;
@@ -80,7 +73,7 @@ bool count_rocks(Personnage* pers, int dir, int** m, int* n) {
         while (pers->y + c < 9 && m[pers->y + c][pers->x] == 1) {
             c ++ ;
         }
-        if (pers->y + c == 9) {
+        if (pers->y + c == 9 || (m[pers->y + c][pers->x] != none && c != 1)) {
             return false ;
         } else if (m[pers->y + c - 1][pers->x] == 1) {
             *n = c ;

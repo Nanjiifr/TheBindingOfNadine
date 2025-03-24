@@ -51,7 +51,7 @@ void party(bool* inGame) {
     *coordy = 0;
     append(calepinMap, 0, 0, salle1);
     char** map = create_map(m, pers, salle1->mobs) ;
-    while (true) {
+    while (lives > 0) {
         m = salle1->map;
         int n = getch() ;
         if (n == 127) {
@@ -61,19 +61,19 @@ void party(bool* inGame) {
         }
         if (n == 122) {
             move(&pers, 0, m) ; //Nord
-            move_mob(m, salle1->mobs, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
         }
         if (n == 113) {
             move(&pers, 3, m) ; //Ouest
-            move_mob(m, salle1->mobs, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
         }
         if (n == 115) {
             move(&pers, 1, m) ; //Sud
-            move_mob(m, salle1->mobs, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
         }
         if (n == 100) {
             move(&pers, 2, m) ; //Est
-            move_mob(m, salle1->mobs, pers.x, pers.y) ;
+            move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
         }
         char** map = create_map(m, pers, salle1->mobs) ;
         print_map(map) ;
@@ -123,4 +123,6 @@ void party(bool* inGame) {
             }
         }
     }
+
+    printGameOver() ;
 }

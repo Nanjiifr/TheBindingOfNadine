@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <string.h>
 #include <sys/time.h>
+#include "interactions.h"
 
 typedef struct Personnage_s Personnage ;
 

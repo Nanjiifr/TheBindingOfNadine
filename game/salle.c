@@ -36,7 +36,7 @@ salle* createRoom(int coord_x, int coord_y) {
     int num_mobs = 3; // Au maximum 3 mobs par salle
     room->mobs = malloc(sizeof(mob) * num_mobs);
     for (int i = 0; i < num_mobs; i++) {
-        room->mobs[i].m_type = rand() % 2;
+        room->mobs[i].m_type = rand() % 3;
         room->mobs[i].x = malloc(sizeof(int));
         room->mobs[i].y = malloc(sizeof(int));
         do { 
