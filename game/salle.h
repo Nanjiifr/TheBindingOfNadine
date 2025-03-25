@@ -16,8 +16,11 @@ typedef struct element_s element ;
 
 salle* createRoom(int coord_x,int coord_y) ;
 void destroyRoom(dA* calepin, salle* room) ;
+
+/*
 teleporteur* createTp(salle* room1, salle* room2) ;
 void addTp(salle* room1, salle* room2) ;
 void removeTp(salle* room1, salle* room2) ;
+*/
 
 #endif //SALLE_H
