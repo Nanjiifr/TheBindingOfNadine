@@ -24,6 +24,9 @@ struct Personnage_s {
 
 typedef struct Personnage_s Personnage ;
 
+struct mob_s;
+typedef struct mob_s mob;
+
 int ROWS ;
 int COLUMNS ;
 

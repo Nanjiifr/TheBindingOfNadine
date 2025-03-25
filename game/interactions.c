@@ -84,6 +84,195 @@ void teleporter_personnage(dA* calepin, int* x, int* y ) {
         *x = e -> tp -> coord_x;
         *y = e -> tp -> coord_y;
     }
+}
 
+void attack_animation(int** m, Personnage pers, mob* mobs, int direction) {
+    char sword_horizontal[3][9] = {
+        "         ",
+        "----+----",
+        "         "
+    };
 
+    char sword_vertical[3][9] = {
+        "    |    ",
+        "    |    ",
+        "    +    "
+    };
+
+    char sword_diagonal[3][9] = {
+        " \\       ",
+        "     +   ",
+        "       / "
+    };
+
+    for (int frame = 0; frame < 4; frame++) {
+        char** map = create_map(m, pers, mobs);
+
+        int target_x = pers.x;
+        int target_y = pers.y;
+
+        // Détermine la position cible en fonction de la direction
+        switch (direction) {
+            case 4: // Droite
+                target_x = pers.x + 1;
+                if (target_x < COLUMNS) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + j + 7] = sword_horizontal[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 0: // Gauche
+                target_x = pers.x - 1;
+                if (target_x >= 0) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + j + 7] = sword_horizontal[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 2: // Haut
+                target_y = pers.y - 1;
+                if (target_y >= 0) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + j + 7] = sword_vertical[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 6: // Bas
+                target_y = pers.y + 1;
+                if (target_y < ROWS) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + j + 7] = sword_vertical[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 1: // Haut-gauche
+                target_x = pers.x - 1;
+                target_y = pers.y - 1;
+                if (target_x >= 0 && target_y >= 0) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + j + 7] = sword_diagonal[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 3: // Haut-droite
+                target_x = pers.x + 1;
+                target_y = pers.y - 1;
+                if (target_x < COLUMNS && target_y >= 0) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + i+ 6][9 * target_x + 8 - j + 7] = sword_diagonal[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 7: // Bas-gauche
+                target_x = pers.x - 1;
+                target_y = pers.y + 1;
+                if (target_x >= 0 && target_y < ROWS) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + 2 - i + 6][9 * target_x + j + 7] = sword_diagonal[i][j];
+                        }
+                    }
+                }
+                break;
+
+            case 5: // Bas-droite
+                target_x = pers.x + 1;
+                target_y = pers.y + 1;
+                if (target_x < COLUMNS && target_y < ROWS) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            map[3 * target_y + 2 - i + 6][9 * target_x + 8 - j + 7] = sword_diagonal[i][j];
+                        }
+                    }
+                }
+                break;
+        }
+
+        print_map(map); // Affiche la carte mise à jour
+        usleep(25000); // Pause de 50 millisecondes
+    }
+}
+
+int dist(int x1, int y1, int x2, int y2) {
+    return abs(x1 - x2) + abs(y1 - y2) ;
+}
+
+void attack(salle* room, Personnage pers) {
+    int pers_x = pers.x;
+    int pers_y = pers.y;
+
+    for (int dir = 0; dir < 8; dir++) {
+        // Appelle l'animation d'attaque avec la direction spécifiée
+        attack_animation(room->map, pers, room->mobs, dir);
+
+        // Détermine la position cible en fonction de la direction
+        int target_x = pers_x;
+        int target_y = pers_y;
+
+        switch (dir) {
+            case 4: // Droite
+                target_x = pers_x + 1;
+                break;
+            case 0: // Gauche
+                target_x = pers_x - 1;
+                break;
+            case 2: // Haut
+                target_y = pers_y - 1;
+                break;
+            case 6: // Bas
+                target_y = pers_y + 1;
+                break;
+            case 1: // Haut-gauche
+                target_x = pers_x - 1;
+                target_y = pers_y - 1;
+                break;
+            case 3: // Haut-droite
+                target_x = pers_x + 1;
+                target_y = pers_y - 1;
+                break;
+            case 7: // Bas-gauche
+                target_x = pers_x - 1;
+                target_y = pers_y + 1;
+                break;
+            case 5: // Bas-droite
+                target_x = pers_x + 1;
+                target_y = pers_y + 1;
+                break;
+        }
+
+        // Vérifie et tue les mobs dans la salle cible
+        for (int i = 0; i < 3; i++) {
+            mob m = room->mobs[i];
+            if (m.m_type != NONE && *m.x == target_x && *m.y == target_y) {
+                // Libère la mémoire associée au mob
+                free(room->mobs[i].x);
+                free(room->mobs[i].y);
+
+                // Réinitialise le mob
+                room->mobs[i].m_type = NONE;
+                room->mobs[i].x = malloc(sizeof(int));
+                room->mobs[i].y = malloc(sizeof(int));
+                *(room->mobs[i].x) = 0;
+                *(room->mobs[i].y) = 0;
+            }
+        }
+    }
 }

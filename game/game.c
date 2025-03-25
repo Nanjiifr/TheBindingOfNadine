@@ -59,21 +59,25 @@ void party(bool* inGame) {
             return ;
         }
         if (n == 122) {
-            move(&pers, 0, m) ; //Nord
             move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
+            move(&pers, 0, m) ; //Nord
         }
         if (n == 113) {
-            move(&pers, 3, m) ; //Ouest
             move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
+            move(&pers, 3, m) ; //Ouest
         }
         if (n == 115) {
-            move(&pers, 1, m) ; //Sud
             move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
+            move(&pers, 1, m) ; //Sud
         }
         if (n == 100) {
-            move(&pers, 2, m) ; //Est
             move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
+            move(&pers, 2, m) ; //Est
+        } if (n == 97) {
+            attack(salle1, pers) ;
+            // move_mob(m, salle1->mobs, pers.x, pers.y, &lives) ;
         }
+
         char** map = create_map(m, pers, salle1->mobs) ;
         print_map(map) ;
         print_lives(lives) ;

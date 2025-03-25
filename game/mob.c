@@ -4,7 +4,6 @@ int rows = 9 ;
 int columns = 13 ;
 
 
-
 int* possible_moves(int** map, mob m, int pers_x, int pers_y) {
     int* p = malloc(sizeof(bool)*4) ;
     for (int i = 0; i < 4; i++) {
@@ -84,36 +83,68 @@ bool can_kill(int dir, mob m, int pers_x, int pers_y) {
     return (abs(*m.x - pers_x) + abs(*m.y - 1 - pers_y) <= 1) ;
 }
 
+void kill_animation(int** m, mob* mobs, int mob_index, int pers_x, int pers_y) {
+    char explosion[3][9] = {
+        "    *    ",
+        "  * * *  ",
+        "    *    "
+    };
+
+    for (int frame = 0; frame < 4; frame++) {
+        char** map = create_map(m, (Personnage){pers_x, pers_y}, mobs);
+
+        int mob_x = *mobs[mob_index].x;
+        int mob_y = *mobs[mob_index].y;
+
+        // Overlay the explosion animation on the mob's position
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (mob_y >= 0 && mob_y < ROWS && mob_x >= 0 && mob_x < COLUMNS) {
+                    map[3 * mob_y + i + 6][9 * mob_x + j + 7] = explosion[i][j];
+                }
+            }
+        }
+
+        print_map(map); // Display the updated map
+        usleep(150000); // Pause for 250 milliseconds
+    }
+
+    // Clear the mob after the animation
+    mobs[mob_index].m_type = NONE;
+    free(mobs[mob_index].x);
+    free(mobs[mob_index].y);
+    mobs[mob_index].x = NULL;
+    mobs[mob_index].y = NULL;
+}
+
 void move_mob(int** map, mob* m, int pers_x, int pers_y, int* lives) {
     srand(time(NULL));
     for (int i = 0; i < 3; i++) {
-        int* p = possible_moves(map, m[i], pers_x, pers_y) ;
+        int* p = possible_moves(map, m[i], pers_x, pers_y);
         int direction;
         if (m[i].m_type == HALFON) {
             direction = rand() % 4;
 
             if (can_kill(direction, m[i], pers_x, pers_y)) {
-                m[i].m_type = NONE ;
-                *lives -= 1 ;
-            }
-            
-            else {
+                kill_animation(map, m, i, pers_x, pers_y);
+                *lives -= 1;
+            } else {
                 do {
                     direction = rand() % 4;
-                } while (!p[direction] && !can_kill(direction, m[i], pers_x, pers_y)) ;
+                } while (!p[direction] && !can_kill(direction, m[i], pers_x, pers_y));
                 switch (direction) {
                     case 0:
-                    (*m[i].x)--;
-                    break;
+                        (*m[i].x)--;
+                        break;
                     case 1:
-                    (*m[i].y)++;
-                    break;
+                        (*m[i].y)++;
+                        break;
                     case 2:
-                    (*m[i].x)++;
-                    break;
+                        (*m[i].x)++;
+                        break;
                     case 3:
-                    (*m[i].y)--;
-                    break;
+                        (*m[i].y)--;
+                        break;
                 }
             }
         }
@@ -127,7 +158,7 @@ void move_mob(int** map, mob* m, int pers_x, int pers_y, int* lives) {
             }
 
             if (can_kill(best_direction, m[i], pers_x, pers_y)) {
-                m[i].m_type = NONE ;
+                kill_animation(map, m, i, pers_x, pers_y);
                 *lives -= 1;
             } else if (best_direction != -1) {
                 switch (best_direction) {

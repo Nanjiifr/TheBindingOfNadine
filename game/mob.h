@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include "game.h"
+#include "creation.h"
+
 
 enum mob_type_e {
     NONE,

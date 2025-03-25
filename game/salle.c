@@ -16,10 +16,6 @@ struct salle_s {
 
 typedef struct salle_s salle;
 
-struct element_s {
-    int key ;
-    salle* value ;
-} ;
 typedef struct element_s element;
 
 salle* createRoom(int coord_x, int coord_y) {
