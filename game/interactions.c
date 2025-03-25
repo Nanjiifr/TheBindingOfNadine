@@ -2,12 +2,24 @@
 
 typedef struct element_s element ;
 
+struct salle_s {
+    int coord_x;
+    int coord_y;
+    int** map;
+    salle* tp;
+    mob* mobs;
+} ;
+
+typedef struct salle_s salle;
+
+
 #define clear() printf("\033[H\033[J")
 
 void boom(dA* calepin, int x, int y) {
     int k = get(calepin, x+1, y).key ;
     salle* e = get(calepin, x+1, y).value ;
 
+    
     if (k != -1) {
         destroyRoom(calepin, e) ;
     }
@@ -48,4 +60,30 @@ void boom(dA* calepin, int x, int y) {
     usleep(500000); // Sleep for 500 milliseconds
     clear() ;
     printf("\033[38;2;40;192;192m") ;
+}
+
+void teleporter_personnage(dA* calepin, int* x, int* y ) {
+    int k = get(calepin, *x, *y).key ;
+    salle* e = get(calepin, *x, *y).value ;
+
+    if (e -> tp == NULL){
+        srand(time(NULL));
+        int c = rand()%117;
+        int d = rand()%112;
+        int a = get(calepin, c, d).key ;
+        salle* b = get(calepin, c, d).value ;
+        if (a == -1) {
+            b = createRoom(c,d);
+            append(calepin,c,d,b);
+        }
+        e -> tp = b;
+        b -> tp = e;
+        *x = c;
+        *y = d;
+    } else {
+        *x = e -> tp -> coord_x;
+        *y = e -> tp -> coord_y;
+    }
+
+
 }

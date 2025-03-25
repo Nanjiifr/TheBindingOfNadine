@@ -10,8 +10,7 @@ struct salle_s {
     int coord_x;
     int coord_y;
     int** map;
-    bool* havetp;
-    teleporteur* tp;
+    salle* tp;
     mob* mobs;
 } ;
 
@@ -28,8 +27,7 @@ salle* createRoom(int coord_x, int coord_y) {
     salle* room = malloc(sizeof(salle));
     room->coord_x = coord_x;
     room->coord_y = coord_y;
-    room->havetp = malloc(sizeof(bool));
-    room->map = create_random_data(room->havetp);
+    room->map = create_random_data();
     room->tp = NULL;
 
     // Generate random mobs for the room
@@ -69,11 +67,11 @@ void destroyRoom(dA* calepin, salle* room) {
     if (room->tp != NULL){
         free(room->tp);
     }
-    free(room->havetp);
     remove_dico(calepin, room->coord_x, room->coord_y) ;
     free(room);
 }
 
+ /*
 teleporteur* createTp(salle* room1, salle* room2){
     teleporteur* tp = malloc(sizeof(teleporteur));
     tp -> salle1 = room1;
@@ -101,3 +99,5 @@ void removeTp(salle* room1, salle* room2){
 void removeMob(salle* room, int mob_id) {
     room->mobs[mob_id].m_type = 0 ;
 }
+
+*/

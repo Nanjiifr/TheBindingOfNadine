@@ -31,6 +31,6 @@ void interaction_objet(obstacle* obst, salle* salle_act) ;
 void boom(dA* calepin, int coordx, int coordy) ;
 
 // Fonction pour téléporter le personnage dans une salle aléatoire.
-void teleporter_personnage(Personnage* personnage, salle* salles, int nombre_salles) ;
+void teleporter_personnage(dA* calepin, int* x, int* y ) ;
 
 #endif // INTERACTIONS_H

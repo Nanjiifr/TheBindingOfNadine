@@ -14,8 +14,7 @@ struct salle_s {
     int coord_x;
     int coord_y;
     int** map;
-    bool* havetp;
-    teleporteur* tp;
+    salle* tp;
     mob* mobs;
 } ;
 
@@ -120,6 +119,14 @@ void party(bool* inGame) {
             printf("                                                  Bomb - Press [B] to activate\n");
             if (n==98) {
                 boom(calepinMap, *coordx, *coordy) ;
+            }
+        }
+
+        if (m[pers.y][pers.x] == portal) {
+            printf("                                                  Teleporter - Press [B] to activate\n");
+            if (n==98) {
+                teleporter_personnage(calepinMap, coordx, coordy) ;
+                salle1 = changeRoom(calepinMap, *coordx, *coordy);
             }
         }
     }
