@@ -64,6 +64,7 @@ void boom(dA* calepin, int x, int y) {
     usleep(500000); // Sleep for 500 milliseconds
     clear() ;
     printf("\033[38;2;40;192;192m") ;
+    clear_input_buffer() ;
 }
 
 void teleporter_personnage(dA* calepin, int* x, int* y ) {
