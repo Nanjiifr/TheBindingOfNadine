@@ -180,4 +180,5 @@ void move_mob(int** map, mob* m, int pers_x, int pers_y, int* lives) {
 
         free(p);
     }
+    clear_input_buffer() ;
 }
