@@ -27,8 +27,8 @@ typedef struct Personnage_s Personnage ;
 struct mob_s;
 typedef struct mob_s mob;
 
-int ROWS ;
-int COLUMNS ;
+extern int ROWS;
+extern int COLUMNS;
 
 int** create_empty () ;
 char** create_map (int** m, Personnage pers, mob* mobs) ;

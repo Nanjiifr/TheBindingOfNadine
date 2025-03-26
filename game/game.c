@@ -81,6 +81,7 @@ void party(bool* inGame) {
         char** map = create_map(m, pers, salle1->mobs) ;
         print_map(map) ;
         print_lives(lives) ;
+        printf("Coordinates : x : %d, y :%d\n", *coordx, *coordy) ;
         printf("Press [Backspace] to quit to title (All game data will be erased)\n");
         
         if(pers.x == 6 && pers.y == 0){
