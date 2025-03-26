@@ -4,6 +4,7 @@
 #include "creation.h"
 #include "../affichage/affichage.h"
 #include <unistd.h>
+#include <termios.h>
 
 typedef struct salle_s salle;
 
@@ -16,6 +17,8 @@ typedef struct Personnage_s Personnage ;
 typedef struct Objet_s Objet ;
 typedef enum obstacle_e obstacle ;
 typedef struct element_s element ;
+
+void clear_input_buffer() ;
 
 // Fonction pour initialiser une bombe.
 void init_bombe(Objet* objet) ;

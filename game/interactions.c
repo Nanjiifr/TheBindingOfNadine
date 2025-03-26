@@ -1,5 +1,9 @@
 #include "interactions.h"
 
+void clear_input_buffer() {
+    tcflush(STDIN_FILENO, TCIFLUSH);
+}
+
 typedef struct element_s element ;
 
 struct salle_s {
@@ -60,6 +64,7 @@ void boom(dA* calepin, int x, int y) {
     usleep(500000); // Sleep for 500 milliseconds
     clear() ;
     printf("\033[38;2;40;192;192m") ;
+    clear_input_buffer() ;
 }
 
 void teleporter_personnage(dA* calepin, int* x, int* y ) {
@@ -87,6 +92,7 @@ void teleporter_personnage(dA* calepin, int* x, int* y ) {
 }
 
 void attack_animation(int** m, Personnage pers, mob* mobs, int direction) {
+    struct pollfd mypoll = { STDIN_FILENO, POLLIN | POLLPRI };
     char sword_horizontal[3][9] = {
         "         ",
         "----+----",
@@ -208,6 +214,7 @@ void attack_animation(int** m, Personnage pers, mob* mobs, int direction) {
 
         print_map(map); // Affiche la carte mise à jour
         usleep(25000); // Pause de 50 millisecondes
+        clear_input_buffer();
     }
 }
 
